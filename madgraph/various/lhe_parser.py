@@ -1066,28 +1066,28 @@ class MultiEventFile(EventFile):
         if proc_charac and proc_charac['ninitial'] == 1:
             #special case for 1>N
             init_information = run_card.get_banner_init_information()
-            event = next(self)
-            if not len(event): #if parse-momenta was false we have to parse the first event
-                event = Event(str(event))
+            with misc.TMP_variable(self.files[0], 'parsing', True):
+                event = self.files[0].next()
             init_information["idbmup1"] = event[0].pdg
             init_information["ebmup1"] = event[0].mass
             init_information["idbmup2"] = 0 
             init_information["ebmup2"] = 0
-            self.seek(0)
+            self.files[0].seek(0)
         else:
             # check special case without PDF for one (or both) beam
             if init_information["idbmup1"] in [0,9]:
-                event = next(self)
-                if len(event) == 0:
-                    event = Event(str(event))
+                with misc.TMP_variable(self.files[0], 'parsing', True):
+                    event = self.files[0].next()
+
                 init_information["idbmup1"]= event[0].pdg
                 if init_information["idbmup2"] == 0:
                     init_information["idbmup2"]= event[1].pdg
-                self.seek(0)
+                self.files[0].seek(0)
             if init_information["idbmup2"] in [0,9]:
-                event = next(self)
+                with misc.TMP_variable(self.files[0], 'parsing', True):
+                    event = self.files[0].next()
                 init_information["idbmup2"] = event[1].pdg
-                self.seek(0)
+                self.files[0].seek(0)
         
         init_information["nprup"] = nb_group
         
