@@ -1546,8 +1546,7 @@ class ALOHAWriterForCPP(WriteALOHA):
     realoperator = '.real()'
     imagoperator = '.imag()'
     ci_definition = 'static std::complex<double> cI = std::complex<double>(0.,1.);\n'
-    
-    
+
     def change_number_format(self, number):
         """Formating the number"""
 
@@ -2224,10 +2223,15 @@ class ALOHAWriterForGPU(ALOHAWriterForCPP):
     imagoperator = '.imag()'
     ci_definition = 'cxtype cI = cxtype(0., 1.);\n'
     
-    type2def = {}    
+    type2def = {}
     type2def['int'] = 'int '
     type2def['double'] = 'fptype '
     type2def['complex'] = 'cxtype '
+    type2def['alohaS'] = 'ALOHAOBJ '
+    type2def['alohaF'] = 'ALOHAOBJ '
+    type2def['alohaV'] = 'ALOHAOBJ '
+    type2def['alohaR'] = 'ALOHAOBJ ' 
+    type2def['alohaT'] = 'ALOHAOBJ '
     type2def['pointer_vertex'] = '*' # using complex<double> * vertex)
     type2def['pointer_coup'] = ''
     
