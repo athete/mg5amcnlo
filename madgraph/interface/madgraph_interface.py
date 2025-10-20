@@ -5113,7 +5113,7 @@ This implies that with decay chains:
                                 else:
                                     mylegids.append(-mpdg)
                                 flavor.append(self._curr_model.merged_particles[mpdg].index(abs(pdg)))
-                            break
+                                break
                     else:  
                         mylegids.append(pdg)
                 else:
