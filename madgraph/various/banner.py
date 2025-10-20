@@ -3353,7 +3353,7 @@ class RunCard(ConfigFile):
     def retro_compatible_custom_fct(lines, mode=None):
 
         f77_type = ['real*8', 'integer', 'double precision', 'logical']
-        function_pat = re.compile('^\s+(?:SUBROUTINE|(?:%(type)s)\s+function)\s+([a-zA-Z]\w*)' \
+        function_pat = re.compile(r'^\s+(?:SUBROUTINE|(?:%(type)s)\s+function)\s+([a-zA-Z]\w*)' \
                                 % {'type':'|'.join(f77_type)}, re.I+re.M)
         include_pat = re.compile(r"\s+include\s+[\'\"]([\w\./]*)") 
         
@@ -4095,8 +4095,8 @@ class FixedfacscaleBlock(RunBlock):
         if 'fixed_fac_scale2' in card.user_set:
             card.user_set.remove('fixed_fac_scale2')
 
-        # #card['pdlabel1'] = value
-        # #card['pdlabel2'] = value
+        dict.__setitem__(card, 'fixed_fac_scale1', card['fixed_fac_scale'])
+        dict.__setitem__(card, 'fixed_fac_scale2', card['fixed_fac_scale'])
 
     @staticmethod
     def post_set(card, value, change_userdefine, raiseerror, name='unknown', **opt):
@@ -4799,7 +4799,6 @@ class RunCardLO(RunCard):
                 self['fixed_fac_scale1'] = True
                 self['nhel']    = 1
                 for i in beam_id_split[1]:
-                    exit
                     if abs(i) == 11:
                         self['lpp1']    = -math.copysign(3,i)
                         self['lpp2']    =  math.copysign(3,i)
