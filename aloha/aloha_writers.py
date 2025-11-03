@@ -1689,10 +1689,11 @@ class ALOHAWriterForCPP(WriteALOHA):
             if argname.startswith('COUP'):
                 point = self.type2def['pointer_coup']
                 if 'M' in self.tag:
-                    type = 'FLV_COUPLING '
                     # define COUP as normal complex after fct definition
                     tmp.append('%s%s%s%s'% (type,point, argname, list_arg))
+                    # arg is of type FLV_COUPLING
                     argname = argname.replace('COUP','MCOUP')
+                    type = 'FLV_COUPLING '
                 args.append('%s%s%s%s'% (type,point, argname, list_arg))
             else:
                 args.append('%s%s%s'% (type, argname, list_arg))
